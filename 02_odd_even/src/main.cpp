@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+using namespace std;
 
 void printOddOrEven(int number)
 {
@@ -13,6 +14,16 @@ void printOddOrEven(int number)
 	{
 		printf("ODD\n");
 	}
+}
+
+bool checkIfNumber(string input)
+{
+	for (int i = 0; i < input.length(); i++)
+	{
+		if (isdigit(input[i]) == false)
+			return false;
+	}
+	return true;
 }
 
 int main(int argc, char *argv[])
@@ -34,6 +45,7 @@ int main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		printf("No program arguments found.\n");
+		return 0;
 	}
 	
 	// TODO(Gusti): i don't know why this doesn't work, but someone please FIX it.
@@ -42,8 +54,9 @@ int main(int argc, char *argv[])
 	// Get the first argument
 	std::string argumentAsString = argv[1];
 	const char* argumentAsCharArray = argumentAsString.c_str();
-	
-	if (isdigit(argumentAsString[0]) == false)
+
+
+	if (checkIfNumber(argumentAsString) == false)
 	{
 		printf("NAN\n");
 	}
