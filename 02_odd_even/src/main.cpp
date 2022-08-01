@@ -16,12 +16,27 @@ void printOddOrEven(int number)
 	}
 }
 
-bool checkIfNumber(string input)
+bool checkIfNumber(const char* input)
 {
-	for (int i = 0; i < input.length(); i++)
+	if (NULL == input || *input == '\0')
+		return false;
+
+	int countMinus = 0;
+	while (*input)
 	{
-		if (isdigit(input[i]) == false)
-			return false;
+		char c = *input;
+		switch (c)
+		{
+		case '-':
+			if (++countMinus > 1)
+				return false;
+			break;
+		default:
+			if (c < '0' || c> '9')
+				return false;
+		}
+
+		input++;
 	}
 	return true;
 }
@@ -48,7 +63,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	
-	// TODO(Gusti): i don't know why this doesn't work, but someone please FIX it.
 	// --------------- start
 
 	// Get the first argument
@@ -56,21 +70,15 @@ int main(int argc, char *argv[])
 	const char* argumentAsCharArray = argumentAsString.c_str();
 
 
-	if (checkIfNumber(argumentAsString) == false)
+	if (checkIfNumber(argumentAsCharArray) == false)
 	{
 		printf("NAN\n");
 	}
 	else
 	{
 		number = atoi(argumentAsCharArray);
-		// No
-	    //should use atoi?
-	    // or std::stoi?
-		
 		printOddOrEven(number);
 	}
-
-	//std::cout << argumentAsString << std::endl; // i think this should be removed
 
 	// --------------- stop
 
