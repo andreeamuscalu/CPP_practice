@@ -1,10 +1,38 @@
 #include <iostream>
 
+//(recursiva), calculeaza a^b
+int power(int a, int b)
+{
+	if (b == 0)
+		return 1;
+	if (b % 2 == 0)
+		return power(a, b / 2) * power(a, b / 2);
+	return a * power(a, b / 2) * power(a, b / 2);
+}
+
+//calculeaza ordinul numarului intordus
+int numberOrder(int a)
+{
+	int n = 0;
+	while (a) {
+		n++;
+		a = a / 10;
+	}
+	return n;
+}
+
 bool isArmstrongNumber(int number)
 {
-	// TODO: implement some functionality to see if this number is an armstrong number
+	int n = numberOrder(number);
+	int temp = number;
+	int	sum = 0;
 
-	return false;
+	while (temp) {
+		int r = temp % 10;
+		sum += power(r, n);
+		temp = temp / 10;
+	}
+	return (sum == number);
 }
 
 void printIsArmstrong(int number)
@@ -17,6 +45,30 @@ void printIsArmstrong(int number)
 	{
 		std::cout << "NOT Armstrong" << std::endl;
 	}
+}
+
+bool checkIfNumber(const char* input)
+{
+	if (NULL == input || *input == '\0')
+		return false;
+
+	int countMinus = 0;
+	while (*input)
+	{
+		char c = *input;
+		switch (c)
+		{
+		case '-':
+			if (++countMinus > 1)
+				return false;
+			break;
+		default:
+			if (c < '0' || c> '9')
+				return false;
+		}
+		input++;
+	}
+	return true;
 }
 
 int main(int argc, char *argv[])
@@ -48,11 +100,19 @@ int main(int argc, char *argv[])
 	}
 
 	int readNumber = 0;
-	// Get the first argument
 	std::string argumentAsString = argv[1];
-	
-	// TODO: read number / cast to integer
+	const char* argumentAsCharArray = argumentAsString.c_str();
 
-	printIsArmstrong(readNumber);
+
+	if (checkIfNumber(argumentAsCharArray) == false)
+	{
+		printf("NAN\n");
+	}
+	else
+	{
+		readNumber = atoi(argumentAsCharArray);
+		printIsArmstrong(readNumber);
+	}
+	
 	return 0;
 }
